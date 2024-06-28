@@ -1,0 +1,227 @@
+/* flex box classes */
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    perspective: 800px;
+    background-color: #f0f0f0;
+}
+
+.flex-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10rem;
+}
+
+
+.child {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* scene & cube basic styles*/
+.scene {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    /* rotate horizontally 20deg and vertically 30 deg */
+    transform: rotateX(-20deg) rotateY(30deg);
+    /* slightly alter rotation for a better 3d effect */
+    transform-style: preserve-3d;
+}
+
+/* generic styles for cube faces*/
+
+.cube-face {
+    position: absolute;
+    width: 150px;
+    height: 150px;
+    border-radius: 5%;
+    border: 2px solid #ddd;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backface-visibility: hidden;
+}
+
+
+.cube-face img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* styles for inidvidual cube faces */
+
+.front {
+    /* no rotation on vertical axis but  push a bit in front on the Z axis*/
+    /* face is visible in default position of cube */
+    transform: rotateY(0deg) translateZ(75px);
+}
+
+.back {
+    /* rotate 180 deg on vertical axis and push in front on  the Z axis */
+    /* face not visible in default position of cube */
+    transform: rotateY(180deg) translateZ(75px);
+}
+
+
+.right {
+    /* rotate 90 degrees on vertical axis and pus in front on the Z axis */
+    /* face not visible in default position of cube */
+    transform: rotateY(90deg) translateZ(75px);
+}
+
+.left {
+    /* rotate 90 degrees counter clockwise on vertical  axis and pus in front on the Z axis */
+    /* face is visible in default position of cube */
+    transform: rotateY(-90deg) translateZ(75px);
+}
+
+.top {
+    /* rotate horizontally to 90 deg and push in front on the Z axis*/
+    /* face is visible in default position of cube */
+    transform: rotateX(90deg) translateZ(75px);
+}
+
+.bottom {
+    /* rotate horizontally to 90 deg counter clockwis and push in front on the Z axis*/
+    /* face is not visible in default position of cube */
+    transform: rotateX(-90deg) translateZ(75px);
+}
+
+
+/* cube rotation keyframe */
+@keyframes randomRotate {
+    0% {
+        /* start from non rotated position */
+        transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+
+    100% {
+        /* rotate full 360 deg on all 3 axes */
+        transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+    }
+}
+
+.animateCube {
+    animation: randomRotate 1s linear;
+}
+
+.reset {
+    transform: rotateX(-20deg) rotateY(30deg) !important;
+}
+
+/*winner styles*/
+.winner{
+    height: 10rem;
+    width: 10rem;
+}
+
+.winner img {
+     width:20rem;
+    height:10rem;
+
+}
+
+.winner .child > h1 {
+    text-align: center;
+}
+
+  /* button */
+  .pushable {
+    position: relative;
+    border: none;
+    background: transparent;
+    padding: 0;
+    cursor: pointer;
+    outline-offset: 4px;
+    transition: filter 250ms;
+}
+
+.shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: hsl(0deg 0% 0% / 0.25);
+    will-change: transform;
+    transform: translateY(2px);
+    transition:
+        transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.edge-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    background: linear-gradient(to left,
+            hsl(340deg 100% 16%) 0%,
+            hsl(340deg 100% 32%) 8%,
+            hsl(340deg 100% 32%) 92%,
+            hsl(340deg 100% 16%) 100%);
+}
+
+.front-btn {
+    display: block;
+    position: relative;
+    padding: 12px 42px;
+    border-radius: 12px;
+    font-size: 1.25rem;
+    color: white;
+    background: hsl(345deg 100% 47%);
+    will-change: transform;
+    transform: translateY(-4px);
+    transition:
+        transform 600ms cubic-bezier(.3, .7, .4, 1);
+}
+
+.pushable:hover {
+    filter: brightness(110%);
+}
+
+.pushable:hover .front-btn {
+    transform: translateY(-6px);
+    transition:
+        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.pushable:active .front-btn {
+    transform: translateY(-2px);
+    transition: transform 34ms;
+}
+
+.pushable:hover .shadow {
+    transform: translateY(4px);
+    transition:
+        transform 250ms cubic-bezier(.3, .7, .4, 1.5);
+}
+
+.pushable:active .shadow {
+    transform: translateY(1px);
+    transition: transform 34ms;
+}
+
+.pushable:focus:not(:focus-visible) {
+    outline: none;
+}
